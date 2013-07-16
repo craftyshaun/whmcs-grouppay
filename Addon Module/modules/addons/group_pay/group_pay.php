@@ -17,7 +17,7 @@ function group_pay_config() {
 	'fields' => array(
 		'Enabled' => array ("FriendlyName" => "Enabled", "Type" => "yesno", "Size" => "25",),
 		'SystemName' => array("FriendlyName" => "System Name", "Type" => "text", "Size"=>"20"),
-		'LicenseKey' => array("FriendlyName" => "LicenseKey", "Type" => "text", "Size"=>"10",),
+		//'LicenseKey' => array("FriendlyName" => "LicenseKey", "Type" => "text", "Size"=>"10",),
 		'MinPayment' => array("FriendlyName" => "Minimum Payment ($)", "Type" => "text", "Size"=>"10"),
 		'PageIcon' => array("FriendlyName" => "Page Icon", "Type" => "text", "Size"=>"30"),
 		)
@@ -38,7 +38,7 @@ function group_pay_activate() {
 		//Copy original settings to new format
 		$settings['SystemName'] = $orig_settings['SystemName'];
 		$settings['MinPayment'] = $orig_settings['MinPayment'];
-		$settings['LicenseKey'] = $orig_settings['LicenseKey'];
+	//	$settings['LicenseKey'] = $orig_settings['LicenseKey'];
 		$settings['PageIcon'] = $orig_settings['PageIcon'];
 		$settings['LocalKey'] = $orig_settings['LocalKey'];
 		if ($settings['Enabled'] == "1") {
@@ -99,7 +99,7 @@ function group_pay_output($vars) {
 
 		echo $message != "" ? "<p><b>$message</b></p>" : "" ;
 		echo '<table><tr><td>Enabled:</td><td>'.($settings['Enabled'] == "on" && $validLic[0] ? '<span style="color: green; font-weight: bold;">Enabled</span>' : '<span style="color: red; font-weight: bold;">Disabled</span>').'</td></tr>';
-		echo '<tr><td>License Key:</td><td>'.$settings['LicenseKey'].'</td></tr>';
+	//	echo '<tr><td>License Key:</td><td>'.$settings['LicenseKey'].'</td></tr>';
 		if($validLic[0]){
 			echo '<tr><td>System Name:</td><td>'.$settings['SystemName'].'</td></tr>';
 			echo "<tr><td>PayPal Account:</td><td>$paypalEmail&nbsp;(<i>Loaded from PayPal gateway.</i>)</td></tr>";
@@ -131,12 +131,11 @@ function group_pay_output($vars) {
 function group_pay_sidebar($vars) {
 	$modulelink = $vars['modulelink'];
     $version = $vars['version'];
-    $licenceKey = $vars['LicenseKey'];
+ //   $licenceKey = $vars['LicenseKey'];
     $systemName = $vars['SystemName'];
 
-    $sidebar = '<span class="header"><img src="images/icons/addonmodules.png" class="absmiddle" width="16" height="16" />'.$systemName.'</span>
-
-    <p><strong>Licence Key:</strong> '.$licenceKey.'</p>';
+    $sidebar = '<span class="header"><img src="images/icons/addonmodules.png" class="absmiddle" width="16" height="16" />'.$systemName.'</span>';
+//    <p><strong>Licence Key:</strong> '.$licenceKey.'</p>';
 
     return $sidebar;
 }
