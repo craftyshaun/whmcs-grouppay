@@ -16,3 +16,8 @@ GroupPay - It's ClanPay for your [WHMCS](http://www.whmcs.com/)!
 
 ### Licensing
 Orignally developed and sold by Kadeo(http://kadeo.com.au) untill July 2013 I have open sourced this so that the community can benefit and develop the module.
+
+
+### Discuss
+If you wish to discuss anything to do with the opensourcing of the module please use this existing thread
+http://forums.whmcs.com/showthread.php?76742-GroupPay-Now-Open-Source-!
