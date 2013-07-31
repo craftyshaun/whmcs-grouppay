@@ -88,7 +88,7 @@ function group_pay_output($vars) {
 		//Do we have to save the settings
 		$message = "";
 				
-		$validLic = gp_ValidLicense();
+		//$validLic = gp_ValidLicense();
 		
 		//Load Current Settins
 		$settings = gp_LoadSettings();
@@ -100,14 +100,14 @@ function group_pay_output($vars) {
 		echo $message != "" ? "<p><b>$message</b></p>" : "" ;
 		echo '<table><tr><td>Enabled:</td><td>'.($settings['Enabled'] == "on" && $validLic[0] ? '<span style="color: green; font-weight: bold;">Enabled</span>' : '<span style="color: red; font-weight: bold;">Disabled</span>').'</td></tr>';
 	//	echo '<tr><td>License Key:</td><td>'.$settings['LicenseKey'].'</td></tr>';
-		if($validLic[0]){
+	//	if($validLic[0]){
 			echo '<tr><td>System Name:</td><td>'.$settings['SystemName'].'</td></tr>';
 			echo "<tr><td>PayPal Account:</td><td>$paypalEmail&nbsp;(<i>Loaded from PayPal gateway.</i>)</td></tr>";
 			echo '<tr><td>Min Deposit:</td><td>$ '.formatcurrency($settings['MinPayment']).'</td></tr>';
 			echo '<tr><td>Page Icon:</td><td>'.($settings['PageIcon']==""?"<i>None Configured</i>":$settings['PageIcon']).'</td></tr>';
-		}else {
-			echo '<tr valign="top"><td style="color:red">License Error:</td><td>'.$validLic[1].'</tr>';
-		}
+	//	}else {
+	//		echo '<tr valign="top"><td style="color:red">License Error:</td><td>'.$validLic[1].'</tr>';
+	//	}
 		echo '<tr valign="top"><td>Current Version:</td><td>'.$settings['version'].'</tr>';
 		echo '<tr><td>&nbsp;</td><td>&nbsp;</tr>';
 		echo '<tr><td>Settings may be altered in Setup->Addon Modules->Group Pay</td><td>&nbsp;</tr>';
