@@ -98,7 +98,7 @@ function group_pay_output($vars) {
 		group_pay_legacy_file_check();
 
 		echo $message != "" ? "<p><b>$message</b></p>" : "" ;
-		echo '<table><tr><td>Enabled:</td><td>'.($settings['Enabled'] == "on" && $validLic[0] ? '<span style="color: green; font-weight: bold;">Enabled</span>' : '<span style="color: red; font-weight: bold;">Disabled</span>').'</td></tr>';
+		echo '<table><tr><td>Enabled:</td><td>'.($settings['Enabled'] == "on" ? '<span style="color: green; font-weight: bold;">Enabled</span>' : '<span style="color: red; font-weight: bold;">Disabled</span>').'</td></tr>';
 	//	echo '<tr><td>License Key:</td><td>'.$settings['LicenseKey'].'</td></tr>';
 	//	if($validLic[0]){
 			echo '<tr><td>System Name:</td><td>'.$settings['SystemName'].'</td></tr>';
