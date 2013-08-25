@@ -17,7 +17,7 @@
 			{* DELETE THE BELOW CODE TO REMOVE PAST PAYMENTS SHOWING FOR LOGGED IN CLIENTS *}
 			
 				<h2>Past {$SystemName} Payments</h2>
-				<p>Below are a list of past payments which have been made.</p>
+				<p>Below are a list of past payments which have been made.{if $hidePublicPayments} These are not shown to the public.{/if}</p>
 				<table class="data" style="width:100%">
 					<tr><th>Date</th><th>Paid By</th><th>Amount</th></tr>
 					{foreach from=$pastPayments key=myId item=pmnt}
@@ -38,7 +38,7 @@
 				<b>Payment Amount:</b> <input type=textbox name="amount"/><br>		
 				{* REQUIRED *} {$gpFormEnd} {* REQUIRED *}
 				
-				{* DELETE THE BELOW CODE TO REMOVE PAST PAYMENTS SHOWING FOR PEOPLE MAKING PAYMENTS *}
+				{if ! $hidePublicPayments}
 			
 					<h2>Past {$SystemName} Payments</h2>
 					<p>Below are a list of past payments which have been made.</p>
@@ -49,8 +49,8 @@
 						{/foreach}
 					</table>
 				
-				{* DELETE THE ABOVE CODE TO REMOVE PAST PAYMENTS SHOWING FOR PEOPLE MAKING PAYMENTS *}
-				
+				{/if}
+
 			{else}
 				{* Payer Has Provided an invalid hash *}
 				You have provided a bad client hash.<br>

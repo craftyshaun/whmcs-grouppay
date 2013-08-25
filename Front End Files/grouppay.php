@@ -70,6 +70,7 @@ while($pastPayment = mysql_fetch_array($dbPastPayments)){
 
 $smartyvalues['pastPayments'] = $pastPayments;
 $smartyvalues["grouppayActive"] = ($gpSettings['Enabled'] == "on"); 
+$smartyvalues["hidePublicPayments"] = ($gpSettings['HidePublicPayments'] == "on");
 $smartyvalues["SystemName"] = $gpSettings['SystemName'];
 $smartyvalues["fromPaypal"] = $fromPaypal;	
 $smartyvalues["minPayment"] = $gpSettings['MinPayment'];
