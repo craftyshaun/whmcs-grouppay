@@ -36,12 +36,14 @@ $gpPayPalEmail 	= gp_LoadPayPayEmail();
 
 
 //Define up some smarty vars for the template
-$smartyvalues["loggedInClientHash"] = $_SESSION['uid'] ? gp_HashUserId($_SESSION['uid']) : "";
+$loggedInClientHash = $_SESSION['uid'] ? gp_HashUserId($_SESSION['uid']) : "";
+$smartyvalues["loggedInClientHash"] = $loggedInClientHash;
 
 
 
-//If we are loading this for a user
-if(isset($userHash)){
+//If we are loading this for a user (other than logged in if applicable)
+if(isset($userHash) && ($userHash != "" && $userHash != $loggedInClientHash)){
+	$smartyvalues["anotherClientHash"] = true;
 	$clientId = gp_LoadUserFromHash($userHash);
 	$result = mysql_query("SELECT * from tblclients where id = $clientId");
 
@@ -50,6 +52,7 @@ if(isset($userHash)){
 	$smartyvalues["clientInfo"] = $clientInfo;
 	$smartyvalues["clientHash"] = $userHash;
 }else{
+	$smartyvalues["anotherClientHash"] = false;
 	// Load the past payments
 	$clientId   = $_SESSION['uid'];
 	$smartyvalues["clientFound"] = false;
