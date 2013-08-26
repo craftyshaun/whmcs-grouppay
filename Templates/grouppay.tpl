@@ -8,8 +8,8 @@
 		{* Screen shown when returning from a paypal transaction *}
 		<p>Your payment has been submitted to paypal.<br>You will be emailed a confirmation from PayPal with the details.</p>
 	{else}
-		{if $loggedin}
-			{* This is shown to Logged in clients only *}
+		{if $loggedin and ! $anotherClientHash}
+			{* This is shown to Logged in clients that haven't supplied another client's hash *}
 			Your {$SystemName} hash is: <b>{$loggedInClientHash}</b><br>
 			Your {$SystemName} link is: <b><a href="{$hashLink}">{$hashLink}</a></b><br>
 			<br/>
@@ -17,7 +17,7 @@
 			{* DELETE THE BELOW CODE TO REMOVE PAST PAYMENTS SHOWING FOR LOGGED IN CLIENTS *}
 			
 				<h2>Past {$SystemName} Payments</h2>
-				<p>Below are a list of past payments which have been made.</p>
+				<p>Below are payments that have been made to your account from others.{if $hidePublicPayments} These are only shown to you.{/if}</p>
 				<table class="data" style="width:100%">
 					<tr><th>Date</th><th>Paid By</th><th>Amount</th></tr>
 					{foreach from=$pastPayments key=myId item=pmnt}
@@ -28,7 +28,7 @@
 			{*  DELETE THE ABOVE CODE TO REMOVE PAST PAYMENTS SHOWING FOR LOGGED IN CLIENTS *}
 			
 		{else}
-			{* This is shown to Payers, clients that are not logged in.*}
+			{* This is shown to Payers (clients that are not logged-in or logged-in clients that gave another hash) *}
 			{if $clientFound}
 				{* Payer Has Provided a valid hash *}	
 				<b>Client Hash:</b> {$clientHash}<br>
@@ -38,10 +38,10 @@
 				<b>Payment Amount:</b> <input type=textbox name="amount"/><br>		
 				{* REQUIRED *} {$gpFormEnd} {* REQUIRED *}
 				
-				{* DELETE THE BELOW CODE TO REMOVE PAST PAYMENTS SHOWING FOR PEOPLE MAKING PAYMENTS *}
+				{if ! $hidePublicPayments}
 			
 					<h2>Past {$SystemName} Payments</h2>
-					<p>Below are a list of past payments which have been made.</p>
+					<p>Below are payments that have been made to this client's {$SystemName}.</p>
 					<table class="data" style="width:100%">
 						<tr><th>Date</th><th>Description</th><th>Amount</th></tr>
 						{foreach from=$pastPayments key=myId item=pmnt}
@@ -49,8 +49,8 @@
 						{/foreach}
 					</table>
 				
-				{* DELETE THE ABOVE CODE TO REMOVE PAST PAYMENTS SHOWING FOR PEOPLE MAKING PAYMENTS *}
-				
+				{/if}
+
 			{else}
 				{* Payer Has Provided an invalid hash *}
 				You have provided a bad client hash.<br>
