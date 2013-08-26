@@ -20,7 +20,6 @@ function group_pay_config() {
 		//'LicenseKey' => array("FriendlyName" => "LicenseKey", "Type" => "text", "Size"=>"10",),
 		'MinPayment' => array("FriendlyName" => "Minimum Payment ($)", "Type" => "text", "Size"=>"10"),
 		'PageIcon' => array("FriendlyName" => "Page Icon", "Type" => "text", "Size"=>"30"),
-		'HidePublicPayments' => array ("FriendlyName" => "Disable Public List of Payments", "Type" => "yesno"),
 		)
 	);
 
