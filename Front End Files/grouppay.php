@@ -61,14 +61,17 @@ if(isset($userHash) && ($userHash != "" && $userHash != $loggedInClientHash)){
 
 // Load the past Payments
 $pastPayments = array();
-$dbPastPayments = mysql_query("SELECT * from `tblcredit` where `clientid` = ".$clientId  ." and `description` LIKE '{$gpSettings['SystemName']}%'"); 
-while($pastPayment = mysql_fetch_array($dbPastPayments)){
+
+if(!$smartyvalues['anotherClientHash'] || $gpSettings['HidePublicPayments'] != "on"){
+	$dbPastPayments = mysql_query("SELECT * from `tblcredit` where `clientid` = ".$clientId  ." and `description` LIKE '{$gpSettings['SystemName']}%'"); 
+	while($pastPayment = mysql_fetch_array($dbPastPayments)){
 		$newPayment 				= array();
 		$newPayment['date'] 		= fromMySQLDate($pastPayment['date']);
 		$newPayment['description'] 	= substr($pastPayment['description'],strlen($gpSettings['SystemName'])+7);
 		$newPayment['amount'] 		= formatCurrency($pastPayment['amount']);
 
 		$pastPayments[] 			= $newPayment;	
+	}
 }
 
 $smartyvalues['pastPayments'] = $pastPayments;
