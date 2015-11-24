@@ -3,9 +3,7 @@
 global $CONFIG;
 
 define("CLIENTAREA",true);
-require("dbconnect.php");
-require("includes/functions.php");
-require("includes/clientareafunctions.php");
+require("init.php");
 
 require("modules/addons/group_pay/functions.php");
 
