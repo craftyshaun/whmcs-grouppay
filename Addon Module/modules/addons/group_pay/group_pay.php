@@ -11,7 +11,7 @@ require_once 'functions.php';
 function group_pay_config() {
 
 	$configarray = array('name' => 'Group Pay',
-	'version' => '1.5',
+	'version' => '1.7',
 	'author' => 'Kadeo',
 	'description' => 'Allows the ability for your clients to provide payment links which allow non registered clients to submit payments which are added as credit to your clients accounts.',
 	'fields' => array(

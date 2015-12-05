@@ -1,6 +1,6 @@
 <?php
 	
-	include '../../../dbconnect.php';
+	include '../../../init.php';
 	include '../../../includes/functions.php';
 	
 	require_once 'functions.php';
@@ -47,7 +47,7 @@
    	
    	if($clientId){
    		//Apply the Credit
-		// Get the clients currecny and apply the rate
+		// Get the clients currency and apply the rate
 		$currency = getCurrency($clientId);
 				
    		//Write the Transactions
