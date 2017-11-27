@@ -1,10 +1,5 @@
 <?php
 
-if ($_SERVER['REMOTE_ADDR'] !== '217.146.89.200') {
-	echo 'Offline for upgrade';
-	exit;
-}
-
 use WHMCS\ClientArea;
 use WHMCS\Database\Capsule;
 
