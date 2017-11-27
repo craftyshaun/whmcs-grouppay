@@ -84,73 +84,64 @@ function gp_loadInvoiceTotalDue($user)
  * @return array
  */
 function gp_ValidateIpn() {
-	$paypalUrl = 'https://www.paypal.com/cgi-bin/webscr';
-//	$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+	$paypalUrl = 'https://ipnpb.paypal.com/cgi-bin/webscr';
+//	$paypalUrl = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr';
 
-	$ipnData = [];
-	$ipnResponse = '';
-
-	$url = parse_url($paypalUrl);
-
-	// generate the post string from the _POST vars aswell as load the
-	// _POST vars into an array so we can play with them from the calling
-	// script.
-	$postData = [];
+	$ipnData = 'cmd=_notify-validate';
 
 	foreach ($_POST as $field => $value) {
-		$ipnData[$field] = $value;
+		$ipnData .= '&' . $field . '=' . rawurlencode($value);
 	}
 
-	$postData['cmd'] = '_notify-validate';
+	$ch = curl_init($paypalUrl);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $ipnData);
+    curl_setopt($ch, CURLOPT_SSLVERSION, 6);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Connection: Close']);
 
-	// Open the connection to paypal
-	$fp = fsockopen($url['host'], '443', $err_num, $err_str, 30);
+    $result = curl_exec($ch);
 
-	$postString = http_build_query($postData);
+    if (!$result) {
+        curl_close($ch);
 
-	if (!$fp) {
-		return [
+        return [
 		    'status'    => false,
-            'data'      => 'Could not open host',
+            'data'      => 'cURL error: [' . curl_errno($ch) . '] ' . curl_error($ch),
         ];
-	} else {
-		// Post the data back to paypal
-		fputs($fp, "POST {$url['path']} HTTP/1.1\r\n");
-		fputs($fp, "Host: {$url['host']}\r\n");
-		fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-		fputs($fp, "Content-length: " . strlen($postString) . "\r\n");
-		fputs($fp, "Connection: close\r\n\r\n");
-		fputs($fp, $postString . "\r\n\r\n");
+    }
 
-		// loop through the response from the server and append to variable
-		while (!feof($fp)) {
-			$ipnResponse .= fgets($fp, 1024);
-		}
 
-		fclose($fp);
-	}
+    $info = curl_getinfo($ch);
+    $httpCode = $info['http_code'];
 
-	/*Second logical for sandbox account due to IPN not sending verified flag.
-	HTTP/1.0 302 Found
-	Location: https://www.sandbox.paypal.com
-	Server: BigIP
-	Connection: close
-	Content-Length: 0
-	*/
-	if (strstr($ipnResponse, "VERIFIED") || $paypalUrl === 'https://www.sandbox.paypal.com/cgi-bin/webscr') {
-		return [
+    if ($httpCode !== 200) {
+        curl_close($ch);
+
+        return [
+            'status'    => false,
+            'data'      => 'PayPal responded with http code ' . $httpCode,
+        ];
+    }
+
+    curl_close($ch);
+
+	if ($result === 'VERIFIED') {
+	    return [
 		    'status'    => true,
-            'data'      => $ipnData,
+            'data'      => $_POST,
         ];
+    }
 
-	} else {
-	    unset($postData['cmd']);
-
-		return [
-		    'status'    => false,
-            'data'      => "Not Verified - {$ipnResponse} {$postString}",
-        ];
-	}
+	return [
+        'status'    => false,
+        'data'      => "Not Verified - {$result} - {$ipnData}",
+    ];
 }
 
 /**
@@ -227,7 +218,7 @@ function gp_insertTransaction($userId, $data, $settings, $rate)
         'userid'        => $userId,
         'gateway'       => 'paypal',
         'date'          => Capsule::raw('NOW()'),
-        'description'   => "{$settings['SystemName']} Credit",
+        'description'   => "{$settings['SystemName']} Credit ({$data['payer_email']})",
         'amountin'      => $data['mc_gross'],
         'fees'          => $data['mc_fee'],
         'transid'       => $data['txn_id'],
