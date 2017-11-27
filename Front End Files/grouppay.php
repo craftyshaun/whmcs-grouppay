@@ -57,7 +57,7 @@ $ca->assign('payPalUrl', 'https://www.paypal.com/cgi-bin/webscr');
 //$ca->assign('payPalUrl', 'https://www.sandbox.paypal.com/cgi-bin/webscr');
 $ca->assign('gpPayPalEmail', gp_LoadPayPalEmail());
 $ca->assign('currency', getCurrency($userId));
-$ca->assign('invoiceAmountDue', gp_loadInvoiceTotalDue($userId));
+//$ca->assign('invoiceAmountDue', gp_loadInvoiceTotalDue($userId));
 
 $ca->setTemplate('grouppay');
 
