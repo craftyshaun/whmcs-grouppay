@@ -98,13 +98,13 @@ function gp_ValidateIpn() {
 	$postData = [];
 
 	foreach ($_POST as $field => $value) {
-		$ipnData [$field] = $value;
+		$ipnData[$field] = $value;
 	}
 
 	$postData['cmd'] = '_notify-validate';
 
 	// Open the connection to paypal
-	$fp = fsockopen($url['host'], '443', $err_num, $err_str, 30 );
+	$fp = fsockopen($url['host'], '443', $err_num, $err_str, 30);
 
 	$postString = http_build_query($postData);
 
@@ -224,10 +224,10 @@ function gp_insertTransaction($userId, $data, $settings, $rate)
         'userid'        => $userId,
         'gateway'       => 'paypal',
         'date'          => Capsule::raw('NOW()'),
-        'description'   => "{$settings['SystemName']} credit",
+        'description'   => "{$settings['SystemName']} Credit",
         'amountin'      => $data['mc_gross'],
         'fees'          => $data['mc_fee'],
-        'transid'       => $data['txt_id'],
+        'transid'       => $data['txn_id'],
         'invoiceid'     => 0,
         'rate'          => $rate,
     ]);
@@ -242,8 +242,8 @@ function gp_insertTransaction($userId, $data, $settings, $rate)
 function gp_AddToCreditBalance($userId, $amount)
 {
     Capsule::table('tblclients')
-           ->increment('credit', $amount)
-           ->where('id', $userId);
+           ->where('id', $userId)
+           ->increment('credit', $amount);
 }
 
 /**
@@ -259,7 +259,7 @@ function gp_LogCredit($userId, $settings, $payerEmail, $gross)
     Capsule::table('tblcredit')->insert([
         'clientid'      => $userId,
         'date'          => Capsule::raw('NOW()'),
-        'description'   => "{$settings['SystemName']} credit ({$payerEmail})",
+        'description'   => "{$settings['SystemName']} Credit ({$payerEmail})",
         'amount'        => $gross,
     ]);
 }
