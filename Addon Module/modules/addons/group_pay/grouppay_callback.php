@@ -8,16 +8,17 @@ require_once 'functions.php';
 //Check that the ipn is valid
 $ipn = gp_ValidateIpn();
 
-/*$ipnValid = array (
-            true,
-            array(
-                "txn_id" => "text_trn_id_".date("Ymdhis"),      // Randon Txn Id
-                "payer_email" => "test@test.com.au",
-                "custom" => "_REPLACE_WITH_VALID_HASH",         // Hash of the user
-                "mc_gross" => 10,                               // Amount of payment (fixed @ $10)
-                "mc_fee" => .10                                 // Amount of fee (Fixed at $10c)
-            )
-    );*/
+//$ipn = [
+//    'status'    => true,
+//    'data'      => [
+//        'txn_id'        => 'text_trn_id_'.date('Ymdhis'), // Randon Txn Id
+//        'payer_email'   => 'test@test.com.au',                  // Email
+//        'custom'        => '_REPLACE_WITH_VALID_HASH',          // Hash of the user
+//        'mc_gross'      => 10,                                  // Amount of payment (fixed @ $10)
+//        'mc_fee'        => .10,                                 // Amount of fee (Fixed at $10c)
+//        'payment_status'=> 'Completed',                         // Payment status
+//    ],
+//];
 
 // Invalid
 if($ipn['status'] === false){
@@ -32,7 +33,7 @@ if($ipn['data']['payment_status'] !== 'Completed') {
 }
 
 
-if (gp_CountTransactionById($ipn['data']['txn_id'])) {
+if (gp_CountTransactionById($ipn['data']['txn_id']) > 0) {
     exit;
 }
 
