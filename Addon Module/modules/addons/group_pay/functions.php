@@ -84,8 +84,8 @@ function gp_loadInvoiceTotalDue($user)
  * @return array
  */
 function gp_ValidateIpn() {
-//	$paypalUrl = 'https://www.paypal.com/cgi-bin/webscr';
-	$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+	$paypalUrl = 'https://www.paypal.com/cgi-bin/webscr';
+//	$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
 	$ipnData = [];
 	$ipnResponse = '';
@@ -127,7 +127,7 @@ function gp_ValidateIpn() {
 			$ipnResponse .= fgets($fp, 1024);
 		}
 
-		fclose ($fp);
+		fclose($fp);
 	}
 
 	/*Second logical for sandbox account due to IPN not sending verified flag.
@@ -144,6 +144,8 @@ function gp_ValidateIpn() {
         ];
 
 	} else {
+	    unset($postData['cmd']);
+
 		return [
 		    'status'    => false,
             'data'      => "Not Verified - {$ipnResponse} {$postString}",
@@ -159,8 +161,9 @@ function gp_ValidateIpn() {
  * @param $result
  */
 function gp_LogGatewayTrans($gateway, $data, $result) {
-	if (is_array ( $data ))
-		$data = print_r($data, true);
+	if (is_array($data)) {
+        $data = print_r($data, true);
+    }
 
 	Capsule::table('tblgatewaylog')->insert([
 	    'date'      => Capsule::raw('NOW()'),
