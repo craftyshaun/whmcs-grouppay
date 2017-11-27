@@ -1,3 +1,9 @@
+Group Pay v1.8 - 2017-11
+ - Samanix updated for WHMCS 7/PHP 7
+ - Various performance improvements and general fixes
+
+----------------------------------------------------------------------------------
+
 Group Pay v1.7 - 2015-11
  - [NEW] - Now compatible with WHMCS v6.0+
 
@@ -5,45 +11,45 @@ Group Pay v1.7 - 2015-11
 
 Group Pay v1.6 - 2013-07
  - [NEW] - Removal of licensing code  for OpenSourcing
----------------------------------------------------------------------------------- 
+----------------------------------------------------------------------------------
 
 Group Pay v1.5 - 2012-07
- - [NEW] - Updated module to support the new WHMCS module framework 
+ - [NEW] - Updated module to support the new WHMCS module framework
  - [BUG] - Corrected the description of the past payments description
              The description now only shows the email of the person who submitted
              the payment.
- 
+
 ----------------------------------------------------------------------------------
 
 
 Group Pay v1.09 - 2012-01
  - [NEW] - Added the abililty to handle multiple paypal emails
- 
+
  - [NEW] - Added inline style to the payment button as a workaround to the styling
 				  applied by the bootstrap.css from twitter
- 
+
 ----------------------------------------------------------------------------------
 
 Group Pay v1.08  - 2011-08
  - [NEW] - Added the ability for Past Payments to be shown to your clients
- 
+
  - [NEW] - Added example code to front end template to show past payments.
- 
- - [BUG] - Rate is now recorded against transaction so that WHMCS 
+
+ - [BUG] - Rate is now recorded against transaction so that WHMCS
 		   income amounts are now correct
-		   
+
  - [REQ] - Encoded using Legacy IonCube encoder to reduce issues on Shared Hosts
 
 ----------------------------------------------------------------------------------
- 
+
 Group Pay v1.074  - 2011-06
  - [BUG] - Renamed check_license function to be more specific to allow
 		   the mod to operate with other applications
 
 ----------------------------------------------------------------------------------
-		   
+
 Group Pay v1.072  - 2010-04-02
  - [BUG] - MySQL warnings when viewing the client page while logged in
- 
+
  - [NEW] - Verified v4.2.1 Compat.
 4
