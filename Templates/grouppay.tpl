@@ -37,13 +37,17 @@ function checkAmt(limit){
 
 				<h2>Past {$SystemName} Payments</h2>
 				<p>Below are payments that have been made to your account from others.{if $hidePublicPayments} These are only shown to you.{/if}</p>
-				<table class="data" style="width:100%">
-					<tr><th>Date</th><th>Paid By</th><th>Amount</th></tr>
-					{foreach from=$pastPayments key=myId item=pmnt}
-						<tr><td>{$pmnt.date}</td><td>{$pmnt.description}</td><td>{$pmnt.amount}</td></tr>
-					{/foreach}
-				</table>
 
+				{if empty($pastPayments)}
+					<b>No previous payments found.</b>
+				{else}
+					<table class="data" style="width:100%">
+						<tr><th>Date</th><th>Paid By</th><th>Amount</th></tr>
+						{foreach from=$pastPayments key=myId item=pmnt}
+							<tr><td>{$pmnt.date}</td><td>{$pmnt.description}</td><td>{$pmnt.amount}</td></tr>
+						{/foreach}
+					</table>
+				{/if}
 			{*  DELETE THE ABOVE CODE TO REMOVE PAST PAYMENTS SHOWING FOR LOGGED IN CLIENTS *}
 
 		{else}
