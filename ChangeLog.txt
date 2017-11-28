@@ -1,6 +1,6 @@
 Group Pay v1.8 - 2017-11
- - Samanix updated for WHMCS 7/PHP 7
- - Various performance improvements and general fixes
+ - [NEW] - Samanix updated for WHMCS 7/PHP 7
+ - [NEW] - Various performance improvements and general fixes
 
 ----------------------------------------------------------------------------------
 
