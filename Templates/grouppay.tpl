@@ -44,7 +44,7 @@ function checkAmt(limit){
 					<table class="data" style="width:100%">
 						<tr><th>Date</th><th>Paid By</th><th>Amount</th></tr>
 						{foreach from=$pastPayments key=myId item=pmnt}
-							<tr><td>{$pmnt.date}</td><td>{$pmnt.description}</td><td>{$pmnt.amount}</td></tr>
+							<tr><td>{$pmnt.date}</td><td>{trim($pmnt.description, "() \t\n\r\0\x0B")}</td><td>{$pmnt.amount}</td></tr>
 						{/foreach}
 					</table>
 				{/if}
